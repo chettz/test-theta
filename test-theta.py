@@ -12,12 +12,14 @@ from scipy import stats
 from theta_pkg import generate_theta
 
 # === 상관관계 종합 분석 함수 ===
-def analyze_correlation(theta_values, max_lag=50, save_image=True):
+def analyze_correlation(theta_values,indexOfTheta, versionOfComplexPhase, max_lag=50, save_image=True):
     """
     theta 값들의 상관관계를 종합적으로 분석
     
     Args:
         theta_values: 분석할 theta 값들의 리스트
+        indexOfTheta: 세타값 인덱스
+        versionOfComplexPhase: 복소수 위상 계산 버전
         max_lag: 분석할 최대 lag 값 (기본값: 50)
         save_image: 이미지 저장 여부 (기본값: True)
     
@@ -100,7 +102,7 @@ def analyze_correlation(theta_values, max_lag=50, save_image=True):
     plt.ylabel('Theta Value')
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
-    plt.savefig('theta_correlation_analysis.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'theta_correlation_analysis_{indexOfTheta}_{versionOfComplexPhase}.png', dpi=300, bbox_inches='tight')
 
     # 5. 결과 출력
     print("\n=== 상관관계 분석 결과 ===")
@@ -166,12 +168,14 @@ def analyze_correlation(theta_values, max_lag=50, save_image=True):
     return acf_values, significant_lags
 
 # === 세타값 히스토그램 분석 함수 ===
-def analyze_theta_histogram(theta_values, bins=50, save_image=True):
+def analyze_theta_histogram(theta_values,indexOfTheta, versionOfComplexPhase, bins=50, save_image=True):
     """
     세타값들의 히스토그램을 생성하고 구간별 빈도의 통계를 분석
     
     Args:
         theta_values: 분석할 theta 값들의 리스트
+        indexOfTheta: 세타값 인덱스
+        versionOfComplexPhase: 복소수 위상 계산 버전
         bins: 히스토그램 구간 수 (기본값: 50)
         save_image: 이미지 저장 여부 (기본값: True)
     
@@ -219,7 +223,7 @@ def analyze_theta_histogram(theta_values, bins=50, save_image=True):
     plt.ylabel('Frequency Count')
     plt.legend()
     plt.grid(True, alpha=0.3)
-    plt.savefig('theta_histogram_analysis.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'theta_histogram_analysis_{indexOfTheta}_{versionOfComplexPhase}.png', dpi=300, bbox_inches='tight')
         
     # 결과 출력
     print("\n=== 히스토그램 분석 결과 ===")
@@ -256,7 +260,7 @@ def analyze_theta_histogram(theta_values, bins=50, save_image=True):
     return hist, bin_edges, std_dev
 
 # === Kolmogorov-Smirnov 검정 함수 ===
-def test_ks_uniformity(theta_values):
+def test_ks_uniformity(theta_values,indexOfTheta, versionOfComplexPhase):
     """
     Kolmogorov-Smirnov 검정을 통해 theta 값들이 [-π, π] 구간의 균등분포를 따르는지 검정
     
@@ -276,7 +280,7 @@ def test_ks_uniformity(theta_values):
     # Kolmogorov-Smirnov 검정 수행 (균등분포와 비교)
     ks_statistic, p_value = stats.kstest(normalized_values, 'uniform')
     
-    print("\n=== Kolmogorov-Smirnov 검정 결과 ===")
+    print(f"\n=== Kolmogorov-Smirnov 검정 결과_{indexOfTheta}_{versionOfComplexPhase}===")
     print(f"KS 통계량: {ks_statistic:.6f}")
     print(f"p-value: {p_value:.6f}")
     
@@ -297,20 +301,48 @@ def test_ks_uniformity(theta_values):
 
 if __name__ == "__main__":
     trials = 10000      # 도약 횟수
-    theta_values = []   # theta 값들을 저장할 리스트
+    theta_1_V3 = []   # theta 값들을 저장할 리스트
+    theta_1_V5 = []
+    theta_2_V3 = []
+    theta_2_V5 = []
     
     # theta 값 수집
     for trial in range(trials):
         theta = generate_theta(trial, 1, 3) 
-        theta_values.append(theta)
+        theta_1_V3.append(theta)
+        theta = generate_theta(trial, 1, 5) 
+        theta_1_V5.append(theta)
+        # theta = generate_theta(trial, 2, 3) 
+        # theta_2_V3.append(theta)
+        # theta = generate_theta(trial, 2, 5) 
+        # theta_2_V5.append(theta)
    
             
     # 상관관계 분석
-    analyze_correlation(theta_values, max_lag=50, save_image=True)
-    
+    analyze_correlation(theta_1_V3,1,3, max_lag=50, save_image=True)
+    # 히스토그램 분석
+    analyze_theta_histogram(theta_1_V3,1,3, bins=50, save_image=True)
+    # KS 검정
+    test_ks_uniformity(theta_1_V3,1,3)
+
+    # 상관관계 분석
+    analyze_correlation(theta_1_V5,1,5, max_lag=50, save_image=True)
+    # 히스토그램 분석
+    analyze_theta_histogram(theta_1_V5,1,5, bins=50, save_image=True)
+    # KS 검정
+    test_ks_uniformity(theta_1_V5,1,5)
+
+    # # 상관관계 분석
+    # analyze_correlation(theta_2_V3,2,3, max_lag=50, save_image=True)
     # # 히스토그램 분석
-    analyze_theta_histogram(theta_values, bins=50, save_image=True)
-    
+    # analyze_theta_histogram(theta_2_V3,2,3, bins=50, save_image=True)
     # # KS 검정
-    test_ks_uniformity(theta_values)
+    # test_ks_uniformity(theta_2_V3,2,3)
+
+    # # 상관관계 분석
+    # analyze_correlation(theta_2_V5,2,5, max_lag=50, save_image=True)
+    # # 히스토그램 분석
+    # analyze_theta_histogram(theta_2_V5,2,5, bins=50, save_image=True)
+    # # KS 검정
+    # test_ks_uniformity(theta_2_V5,2,5)
  
