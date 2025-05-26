@@ -117,7 +117,7 @@ def generate_theta(trial: int, indexOfTheta: int, versionOfComplexPhase: int) ->
 if __name__ == "__main__":
     trial = 0
     while True:
-        theta = generate_theta(trial, 1, 5)
+        theta = generate_theta(trial, 2, 5)
         # angle 값(-π에서 π)을 0~2^32-1 사이의 정수로 변환
         # 1. angle을 0~2π 범위로 변환 (angle + π)
         # 2. 0~1 범위로 정규화 ((angle + π) / (2π))

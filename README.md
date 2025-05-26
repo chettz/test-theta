@@ -21,7 +21,7 @@ AES-256 암호화와 복소수 연산을 통해 안전한 세타값(theta)을 �
 
 ## 주요 함수
 
-### `generate_theta(trial: int, indexOfTheta: int, versionOfComplexPhase: int) -> float`
+### `generate_theta(trial, indexOfTheta, versionOfComplexPhase)`
 
 세타값을 생성하는 함수
 
