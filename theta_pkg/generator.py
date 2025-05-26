@@ -80,7 +80,7 @@ def generate_group_order_seed(tod, trial, rank, key):  # 그룹 순서를 정하
     return get_complex_from_seed(ct[8:])  # 8~15바이트 사용
 
 # === 세타값 생성 함수 ===
-def generate_theta(trial: int, indexOfTheta: int, versionOfComplexPhase: int) -> float:
+def generate_theta(trial: int, indexOfTheta: int, versionOfComplexPhase: int, customTOD = None) -> float:
     """
     위상상값(theta)을 생성하는 함수
     
@@ -94,10 +94,17 @@ def generate_theta(trial: int, indexOfTheta: int, versionOfComplexPhase: int) ->
         - versionOfComplexPhase = 3: generate_complex_phase_V3 함수 사용 (7회 반복 연산)
         - versionOfComplexPhase = 5: generate_complex_phase_V5 함수 사용 (Zadoff-Chu 시퀀스 기반)
     
+    customTOD : 사용자 지정 tod 값. None이면 현재 시간 사용
+    
     Returns:
         float: 계산된 위상값 (angle), -π에서 π 범위의 값
     """
-    tod = int(time.time()) & ((1 << 44) - 1)
+
+    if customTOD is not None:
+        tod = customTOD & ((1 << 44) - 1)
+    else:
+        tod = int(time.time()) & ((1 << 44) - 1)
+        
     if indexOfTheta == 1:
         for rank in range(GROUP_COUNT):
             z = generate_group_order_seed(tod, trial, rank, AES_KEY) 

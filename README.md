@@ -21,7 +21,7 @@ AES-256 암호화와 복소수 연산을 통해 안전한 세타값(theta)을 �
 
 ## 세타값 생성 함수(generator.py)
 
-### `generate_theta(trial, indexOfTheta, versionOfComplexPhase)`
+### `generate_theta(trial, indexOfTheta, versionOfComplexPhase, customTOD)`
 
 세타값을 생성하는 함수
 
@@ -32,7 +32,8 @@ AES-256 암호화와 복소수 연산을 통해 안전한 세타값(theta)을 �
   - `2` $\theta_2$: 주파수 위치를 결정하기 위한 세타값 생성
 - `versionOfComplexPhase`: 복소수 위상 계산 버전
   - `3`: generate_complex_phase_V3 함수 사용 (7회 반복 연산)
-  - `5`: generate_complex_phase_V5 함수 사용 (Zadoff-Chu 시퀀스 기반)
+  - `5`: generate_complex_phase_V5 함수 사용 (1회 반복 연산산)
+- `customTOD`: 사용자 지정 tod 값. None이면 현재 시간 사용
 
 **반환값:**
 - `float`: 계산된 위상값 (angle), -π에서 π 범위의 값

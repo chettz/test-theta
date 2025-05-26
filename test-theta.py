@@ -299,9 +299,10 @@ if __name__ == "__main__":
     trials = 10000      # 도약 횟수
     theta_values = []   # theta 값들을 저장할 리스트
     
+    customTOD = 1748660400 # 2025년 5월 31일 12:00:00
     # theta 값 수집
     for trial in range(trials):
-        theta = generate_theta(trial, 1, 3) 
+        theta = generate_theta(trial, 1, 5, customTOD) 
         theta_values.append(theta)
             
     # 상관관계 분석
