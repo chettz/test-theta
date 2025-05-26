@@ -1,6 +1,6 @@
 # Test Theta
 
-복소수 위상 기반 세타값 생성 및 테스트 프로젝트
+복소수 위상 기반 세타값 생성 및 테스트 폴더더
 
 ## 개요
 
@@ -16,10 +16,17 @@ AES-256 암호화와 복소수 연산을 통해 안전한 세타값(theta)을 �
 
 ## 파일 구조
 
-- `generate-theta.py`: 세타값 생성 메인 함수들
-- `test-theta.py`: 생성된 세타값들의 랜덤성을 평가하기 위한 통계적 평가가
+├── README.md
+├── requirements.txt
+├── test-theta.py
+└── theta_pkg
+    ├── __init__.py
+    └── generator.py
 
-## 주요 함수
+- `generator.py`: 세타값 생성
+- `test-theta.py`: 생성된 세타값들의 랜덤성을 평가하기 위한 통계적 평가
+
+## 세타값 생성성 함수
 
 ### `generate_theta(trial, indexOfTheta, versionOfComplexPhase)`
 
@@ -40,7 +47,7 @@ AES-256 암호화와 복소수 연산을 통해 안전한 세타값(theta)을 �
 ## 사용 방법
 
 ```python
-from generate_theta import generate_theta
+from theta_pkg import generate_theta
 
 # 그룹 순서용 세타값 생성 (버전 3)
 theta1 = generate_theta(trial=0, indexOfTheta=1, versionOfComplexPhase=3)
@@ -59,10 +66,4 @@ theta2 = generate_theta(trial=0, indexOfTheta=2, versionOfComplexPhase=5)
 
 ```bash
 pip install numpy matplotlib pycryptodome
-```
-
-## 실행
-
-```bash
-python generate-theta.py
 ```
