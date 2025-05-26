@@ -300,10 +300,12 @@ if __name__ == "__main__":
     theta_values = []   # theta 값들을 저장할 리스트
     
     customTOD = 1748660400 # 2025년 5월 31일 12:00:00
+
     # theta 값 수집
     for trial in range(trials):
         theta = generate_theta(trial, 1, 5, customTOD) 
         theta_values.append(theta)
+        customTOD += 1 # 1초 증가
             
     # 상관관계 분석
     analyze_correlation(theta_values, max_lag=50, save_image=True)
