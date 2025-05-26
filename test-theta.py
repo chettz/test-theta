@@ -25,6 +25,8 @@ def analyze_correlation(theta_values, max_lag=50, save_image=True):
         acf_values: 자기상관함수 값들
         significant_lags: 통계적으로 유의한 lag들
     """
+
+    print("\n# ======= 상관관계 종합 분석======= #")
     n = len(theta_values)
     theta_array = np.array(theta_values)
     
@@ -178,6 +180,9 @@ def analyze_theta_histogram(theta_values, bins=50, save_image=True):
         bins: 구간 경계값 배열
         std_dev: 구간별 빈도의 표준편차
     """
+
+    print("\n# ======= 세타값 히스토그램 분석======= #")
+
     # 히스토그램 데이터 계산
     hist, bin_edges = np.histogram(theta_values, bins=bins)
     
@@ -262,6 +267,9 @@ def test_ks_uniformity(theta_values):
         ks_statistic: KS 통계량
         p_value: p-value
     """
+
+    print("\n# ======= KS 검정 ======= #")
+
     # theta 값들을 [0, 1] 구간으로 정규화 (균등분포 검정을 위해)
     normalized_values = (np.array(theta_values) + np.pi) / (2 * np.pi)
     
@@ -293,11 +301,9 @@ if __name__ == "__main__":
     
     # theta 값 수집
     for trial in range(trials):
-        theta = generate_theta(trial, 2, 5) 
+        theta = generate_theta(trial, 1, 3) 
         theta_values.append(theta)
-
-    print(theta_values)
-    
+            
     # 상관관계 분석
     analyze_correlation(theta_values, max_lag=50, save_image=True)
     
