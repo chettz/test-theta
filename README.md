@@ -47,6 +47,11 @@ theta1 = generate_theta(trial=0, indexOfTheta=1, versionOfComplexPhase=3)
 
 # 주파수 위치용 세타값2 생성 (버전 5)
 theta2 = generate_theta(trial=0, indexOfTheta=2, versionOfComplexPhase=5)
+
+# 세타값 10개 추출
+for trial in range(10):
+      theta = generate_theta(trial, 1, 3) 
+      theta_values.append(theta)
 ```
 
 ## 세타값 통계적 평가 함수(test-theta.py)
