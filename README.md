@@ -118,8 +118,6 @@ test_ks_uniformity(theta_values)                   # KS 검정
 - matplotlib
 - pycryptodome
 
-## 설치
-
 ```bash
 pip install numpy matplotlib pycryptodome
 ```
