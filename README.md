@@ -19,7 +19,7 @@ AES-256 암호화와 복소수 연산을 통해 안전한 세타값(theta)을 �
 - `generator.py`: 세타값 생성
 - `test-theta.py`: 생성된 세타값들의 랜덤성을 평가하기 위한 통계적 평가 제공
 
-## 세타값 생성 함수
+## 세타값 생성 함수(generator.py)
 
 ### `generate_theta(trial, indexOfTheta, versionOfComplexPhase)`
 
@@ -49,7 +49,7 @@ theta1 = generate_theta(trial=0, indexOfTheta=1, versionOfComplexPhase=3)
 theta2 = generate_theta(trial=0, indexOfTheta=2, versionOfComplexPhase=5)
 ```
 
-## 세타값 통계적 평가 함수
+## 세타값 통계적 평가 함수(test-theta.py)
 
 `test-theta.py`에서 생성된 세타값들의 랜덤성과 균등성을 평가하기 위한 3가지 통계적 분석 함수를 제공합니다.
 
