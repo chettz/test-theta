@@ -14,6 +14,8 @@ GROUP_BANDWIDTH_MHZ = SLOT_BANDWIDTH_MHZ * 17  # 그룹 하나당 대역폭 = 0.
 TOTAL_BANDWIDTH_MHZ = 200  # 전체 사용 가능한 대역폭
 MIN_SPACING_MHZ = 0.1
 GOLDEN_RATIO = (5 ** 0.5 - 1) / 2  # 황금비를 복소수 연산에 활용
+AES_KEY = b'136F956EC6322070C4B1D0735B1929340D9BAF324AABE0467ED4E49817810908'
+
 
 # === 복소수 위상 기반 정규화_V3 ===
 def generate_complex_phase_V3(z: complex, iterations: int = 7):  # 반복 복소수 연산 함수
@@ -94,19 +96,17 @@ def generate_theta(trial: int, indexOfTheta: int, versionOfComplexPhase: int) ->
     Returns:
         float: 계산된 위상값 (angle), -π에서 π 범위의 값
     """
-    # key = b'0123456789abcdef0123456789abcdef'  # 32바이트 AES-256 키
-    key = secrets.token_bytes(32)   # 랜덤 32바이트 키 생성
     tod = int(time.time()) & ((1 << 44) - 1)
     if indexOfTheta == 1:
         for rank in range(GROUP_COUNT):
-            z = generate_group_order_seed(tod, trial, rank, key) 
+            z = generate_group_order_seed(tod, trial, rank, AES_KEY) 
             if versionOfComplexPhase == 3:
                 _, angle = generate_complex_phase_V3(z)  # 위상값 계산 버전 3 적용
             elif versionOfComplexPhase == 5:
                 _, angle = generate_complex_phase_V5(z)  # 위상값 계산 버전 5 적용
     elif indexOfTheta == 2:
         for group_id in range(GROUP_COUNT):
-            z = generate_frequency_seed(tod, trial, group_id, key)  
+            z = generate_frequency_seed(tod, trial, group_id, AES_KEY)  
             if versionOfComplexPhase == 3:
                 _, angle = generate_complex_phase_V3(z)  # 위상값 계산 버전 3 적용
             elif versionOfComplexPhase == 5:
@@ -116,12 +116,15 @@ def generate_theta(trial: int, indexOfTheta: int, versionOfComplexPhase: int) ->
 
 if __name__ == "__main__":
     trial = 0
-    while True:
-        theta = generate_theta(trial, 2, 5)
-        # angle 값(-π에서 π)을 0~2^32-1 사이의 정수로 변환
-        # 1. angle을 0~2π 범위로 변환 (angle + π)
-        # 2. 0~1 범위로 정규화 ((angle + π) / (2π))
-        # 3. 32비트 정수 범위로 스케일링
-        integer_value = int(((theta + np.pi) / (2 * np.pi)) * (2**32 - 1))
-        print(f"Trial {trial}: {integer_value}")
-        trial += 1
+    hex_str = AES_KEY.hex().upper()
+    print(hex_str)
+
+    # while True:
+    #     theta = generate_theta(trial, 2, 5)
+    #     # angle 값(-π에서 π)을 0~2^32-1 사이의 정수로 변환
+    #     # 1. angle을 0~2π 범위로 변환 (angle + π)
+    #     # 2. 0~1 범위로 정규화 ((angle + π) / (2π))
+    #     # 3. 32비트 정수 범위로 스케일링
+    #     integer_value = int(((theta + np.pi) / (2 * np.pi)) * (2**32 - 1))
+    #     print(f"Trial {trial}: {integer_value}")
+    #     trial += 1
