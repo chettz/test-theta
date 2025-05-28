@@ -12,7 +12,7 @@ from scipy import stats
 from theta_pkg import generate_theta
 
 # === 상관관계 종합 분석 함수 ===
-def analyze_correlation(theta_values,indexOfTheta, versionOfComplexPhase, max_lag=50, save_image=True):
+def analyze_correlation(theta_values,indexOfTheta, versionOfComplexPhase, max_lag=50):
     """
     theta 값들의 상관관계를 종합적으로 분석
     
@@ -168,7 +168,7 @@ def analyze_correlation(theta_values,indexOfTheta, versionOfComplexPhase, max_la
     return acf_values, significant_lags
 
 # === 세타값 히스토그램 분석 함수 ===
-def analyze_theta_histogram(theta_values,indexOfTheta, versionOfComplexPhase, bins=50, save_image=True):
+def analyze_theta_histogram(theta_values,indexOfTheta, versionOfComplexPhase, bins=50):
     """
     세타값들의 히스토그램을 생성하고 구간별 빈도의 통계를 분석
     
@@ -214,7 +214,6 @@ def analyze_theta_histogram(theta_values,indexOfTheta, versionOfComplexPhase, bi
 
     # 서브플롯 2: 구간별 빈도 막대그래프
     plt.subplot(2, 2, 2)
-    bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
     plt.bar(range(len(hist)), hist, alpha=0.7, color='orange', edgecolor='black')
     plt.axhline(y=expected_freq, color='red', linestyle='--', linewidth=2, 
                 label=f'Expected frequency: {expected_freq:.1f}')
@@ -308,41 +307,41 @@ if __name__ == "__main__":
     
     # theta 값 수집
     for trial in range(trials):
-        theta = generate_theta(trial, 1, 3) 
-        theta_1_V3.append(theta)
-        theta = generate_theta(trial, 1, 5) 
-        theta_1_V5.append(theta)
-        # theta = generate_theta(trial, 2, 3) 
-        # theta_2_V3.append(theta)
-        # theta = generate_theta(trial, 2, 5) 
-        # theta_2_V5.append(theta)
+        # theta = generate_theta(trial, 1, 3) 
+        # theta_1_V3.append(theta)
+        # theta = generate_theta(trial, 1, 5) 
+        # theta_1_V5.append(theta)
+        theta = generate_theta(trial, 2, 3) 
+        theta_2_V3.append(theta)
+        theta = generate_theta(trial, 2, 5) 
+        theta_2_V5.append(theta)
    
             
-    # 상관관계 분석
-    analyze_correlation(theta_1_V3,1,3, max_lag=50, save_image=True)
-    # 히스토그램 분석
-    analyze_theta_histogram(theta_1_V3,1,3, bins=50, save_image=True)
-    # KS 검정
-    test_ks_uniformity(theta_1_V3,1,3)
-
-    # 상관관계 분석
-    analyze_correlation(theta_1_V5,1,5, max_lag=50, save_image=True)
-    # 히스토그램 분석
-    analyze_theta_histogram(theta_1_V5,1,5, bins=50, save_image=True)
-    # KS 검정
-    test_ks_uniformity(theta_1_V5,1,5)
+    # # 상관관계 분석
+    # analyze_correlation(theta_1_V3,1,3, max_lag=50)
+    # # 히스토그램 분석
+    # analyze_theta_histogram(theta_1_V3,1,3, bins=50)
+    # # KS 검정
+    # test_ks_uniformity(theta_1_V3,1,3)
 
     # # 상관관계 분석
-    # analyze_correlation(theta_2_V3,2,3, max_lag=50, save_image=True)
+    # analyze_correlation(theta_1_V5,1,5, max_lag=50)
     # # 히스토그램 분석
-    # analyze_theta_histogram(theta_2_V3,2,3, bins=50, save_image=True)
+    # analyze_theta_histogram(theta_1_V5,1,5, bins=50)
     # # KS 검정
-    # test_ks_uniformity(theta_2_V3,2,3)
+    # test_ks_uniformity(theta_1_V5,1,5)
 
-    # # 상관관계 분석
-    # analyze_correlation(theta_2_V5,2,5, max_lag=50, save_image=True)
-    # # 히스토그램 분석
-    # analyze_theta_histogram(theta_2_V5,2,5, bins=50, save_image=True)
-    # # KS 검정
-    # test_ks_uniformity(theta_2_V5,2,5)
+    # 상관관계 분석
+    analyze_correlation(theta_2_V3,2,3, max_lag=50)
+    # 히스토그램 분석
+    analyze_theta_histogram(theta_2_V3,2,3, bins=50)
+    # KS 검정
+    test_ks_uniformity(theta_2_V3,2,3)
+
+    # 상관관계 분석
+    analyze_correlation(theta_2_V5,2,5, max_lag=50)
+    # 히스토그램 분석
+    analyze_theta_histogram(theta_2_V5,2,5, bins=50)
+    # KS 검정
+    test_ks_uniformity(theta_2_V5,2,5)
  
