@@ -9,7 +9,7 @@ import sys
 
 # === 상수 및 시스템 매개변수 정의 ===
 GROUP_COUNT = 45  # 전체 그룹 수
-SLOT_BANDWIDTH_MHZ = 0.0225  # 슬롯 크기 (22.5 kHz → 0.0225MHz)
+SLOT_BANDWIDTH_MHZ = 0.225  # 슬롯 크기 
 GROUP_BANDWIDTH_MHZ = SLOT_BANDWIDTH_MHZ * 17  # 그룹 하나당 대역폭 = 0.3825 MHz (0.0225 * 17 = 0.3825)
 TOTAL_BANDWIDTH_MHZ = 200  # 전체 사용 가능한 대역폭
 MIN_SPACING_MHZ = 0.1
